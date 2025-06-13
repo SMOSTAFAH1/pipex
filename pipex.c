@@ -114,16 +114,23 @@ char	**ft_split(const char *s, char c)
 {
 	int		words;
 	char	**res;
+	int		i;
 
 	words = word_count_and_fill(s, c, NULL, 0);
 	res = (char **) malloc((words + 1) * sizeof(char *));
 	if (res == NULL)
 		return (NULL);
-	res[words] = NULL;
+	i = 0;
+	while (i <= words)
+	{
+		res[i] = NULL;
+		i++;
+	}
 	if (word_count_and_fill(s, c, res, 1) == -1)
 	{
 		while (--words >= 0)
-			free(res[words]);
+			if (res[words] != NULL)
+				free(res[words]);
 		free(res);
 		return (NULL);
 	}
